@@ -26,14 +26,15 @@ namespace NbaWebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddDbContext<NbaDbContext>();
-            services.AddCors(o => o.AddPolicy("AppPolicy", policy =>
+            services.AddCors(o => o.AddDefaultPolicy(policy =>
             {
                 policy.AllowAnyHeader()
                       .AllowAnyOrigin()
                       .AllowAnyMethod();
             }));
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddDbContext<NbaDbContext>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,9 +49,9 @@ namespace NbaWebApi
                 app.UseHsts();
             }
 
+            app.UseCors();
             app.UseHttpsRedirection();
             app.UseMvc();
-            app.UseCors("AppPolicy");
         }
     }
 }

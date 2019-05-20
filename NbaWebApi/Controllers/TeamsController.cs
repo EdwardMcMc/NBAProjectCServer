@@ -9,11 +9,13 @@ using NbaDb.Data;
 using NbaDb.Models;
 using NbaSharedModels.RequestModels;
 using NbaSharedModels.ViewModels;
+using Microsoft.AspNetCore.Cors;
 
 namespace NbaWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors]
     public class TeamsController : ControllerBase
     {
         private readonly NbaDbContext _context;

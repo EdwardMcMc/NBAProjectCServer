@@ -11,11 +11,13 @@ using NbaDb.Data;
 using NbaDb.Models;
 using NbaWebApi.ExceptionHandlers;
 using NbaSharedModels.ViewModels;
+using Microsoft.AspNetCore.Cors;
 
 namespace NbaWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors]
     public class PlayersController : ControllerBase
     {
         private readonly NbaDbContext _context;

@@ -12,11 +12,13 @@ using NbaSharedModels.ViewModels;
 using NbaWebApi.Models;
 using NbaWebApi.Services;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Cors;
 
 namespace NbaWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors]
     public class PredictionsController : ControllerBase
     {
         private readonly int MAX_PLAYERS = 15;
