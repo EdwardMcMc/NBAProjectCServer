@@ -28,6 +28,12 @@ namespace NbaWebApi
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDbContext<NbaDbContext>();
+            services.AddCors(o => o.AddPolicy("AppPolicy", policy =>
+            {
+                policy.AllowAnyHeader()
+                      .AllowAnyOrigin()
+                      .AllowAnyMethod();
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +50,7 @@ namespace NbaWebApi
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseCors("AppPolicy");
         }
     }
 }
