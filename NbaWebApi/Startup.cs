@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -33,8 +34,14 @@ namespace NbaWebApi
                       .AllowAnyMethod();
             }));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddDbContext<NbaDbContext>();
-            
+
+            // Production - uses live cloud database when in a Production environment
+            //services.AddDbContext<NbaDbContext>(options => 
+            //    options.UseSqlServer(Configuration.GetConnectionString("NbaDbContext")));
+
+            // Development - uses local db when app is in a Development environment
+            services.AddDbContext<NbaDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("NbaDbContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

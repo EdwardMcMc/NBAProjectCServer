@@ -8,6 +8,8 @@ namespace NbaDb.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public double? Prediction { get; set; }
+        public int? HashCode { get; set; }
 
         public ICollection<TeamPlayer> TeamPlayers { get; set; }
     }
