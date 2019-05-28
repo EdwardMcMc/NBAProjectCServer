@@ -35,10 +35,11 @@ namespace NbaWebApi
             }));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            // Production - uses live cloud database
-            //services.AddDbContext<NbaDbContext>();
+            // Production - uses live cloud database when in a Production environment
+            //services.AddDbContext<NbaDbContext>(options => 
+            //    options.UseSqlServer(Configuration.GetConnectionString("NbaDbContext")));
 
-            // Development - uses local db
+            // Development - uses local db when app is in a Development environment
             services.AddDbContext<NbaDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("NbaDbContext")));
         }

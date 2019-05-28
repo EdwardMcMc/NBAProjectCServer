@@ -24,10 +24,10 @@ namespace NbaDb.Data
         }
 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Data Source=sb-lib-exercises.database.windows.net;Initial Catalog=NbaDb;User ID=monkiepaw;Password=ThisIsNotAGoodPassword88;Connect Timeout=60;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer(@"Data Source=sb-lib-exercises.database.windows.net;Initial Catalog=NbaDb;User ID=monkiepaw;Password=ThisIsNotAGoodPassword88;Connect Timeout=60;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
