@@ -13,6 +13,7 @@ using NbaWebApi.Models;
 using NbaWebApi.Services;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.EntityFrameworkCore;
 
 namespace NbaWebApi.Controllers
 {
@@ -66,6 +67,39 @@ namespace NbaWebApi.Controllers
             {
                 Prediction = prediction.Results.output1[0].ScoredLabel
             });
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var response = new TeamPredictionList();
+            response.Predictions = new List<TeamPrediction>();
+            Team T = await _context.Team.FindAsync(id);
+            if (T == null)
+            {
+                return NotFound($"No Teams exists with id: {id}");
+            }
+            response.Predictions.Add(new TeamPrediction(T));
+            return Ok(response);
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var response = new TeamPredictionList();
+            response.Predictions = await _context.Team
+                .Select(t => new TeamPrediction(t))
+                .ToListAsync();
+            if (response.Predictions.Count == 0)
+            {
+                return NotFound("No Teams Found");
+            }
+            return Ok(response);
         }
 
         private MLRequestModel CreatePredictionRequestBody(PlayerStatistics aggregatedStats)
