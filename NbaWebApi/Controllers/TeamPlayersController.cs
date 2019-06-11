@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
+using NbaWebApi.Services;
 
 namespace NbaWebApi.Controllers
 {
@@ -141,7 +142,10 @@ namespace NbaWebApi.Controllers
                 return BadRequest("More than 1 teamId in request.");
             }
 
+            // Ready -> add teamPlayers
             _context.TeamPlayer.AddRange(teamPlayers);
+
+            // Try to save changes to the database
             try
             {
                 await _context.SaveChangesAsync();
@@ -159,8 +163,14 @@ namespace NbaWebApi.Controllers
                 return BadRequest($"Team Id or Player Id doesn't exist.");
             }
 
-            // Create the TeamPlayer list with all Player data from the database
+            // Get current player Ids from the team
             var playerIds = teamPlayers.Select(tp => tp.PlayerId).ToArray();
+
+            // Process a Prediction for the team
+            var predictor = new Predictor(teamId, playerIds, _context);
+            await predictor.Fetch();
+
+            // Create the TeamPlayer list with all Player data from the database
             var players = await _context.TeamPlayer
                 .Where(tp => tp.TeamId == teamId && playerIds.Contains(tp.PlayerId))
                 .Include(tp => tp.Player)
