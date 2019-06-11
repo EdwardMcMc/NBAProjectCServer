@@ -16,10 +16,10 @@ namespace NbaDbInitialiser
         {
             var teamPlayers = new TeamPlayer[]
             {
-                new TeamPlayer{ TeamId = 9633324, PlayerId = 2544 },
-                new TeamPlayer{ TeamId = 9633324, PlayerId = 201939 },
-                new TeamPlayer{ TeamId = 42, PlayerId = 2544 },
-                new TeamPlayer{ TeamId = 42, PlayerId = 203500 }
+                new TeamPlayer{ TeamId = 1, PlayerId = 2544 },
+                new TeamPlayer{ TeamId = 1, PlayerId = 201939 },
+                new TeamPlayer{ TeamId = 2, PlayerId = 2544 },
+                new TeamPlayer{ TeamId = 2, PlayerId = 203500 }
             };
 
             Context.AddRange(teamPlayers);
